@@ -1,59 +1,96 @@
-# PDF-Bot
-
-Here's a comprehensive **README.md** file for your **PDF-Bot** repository, along with a **flowchart** to visualize the system architecture:
-
-```markdown
 # 📄 PDF-Bot - AI-Powered PDF Assistant
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.25.0-FF4B4B)
-![LangChain](https://img.shields.io/badge/LangChain-0.0.200-00ADD8)
-[![GitHub stars](https://img.shields.io/github/stars/Kameshwaran-45/PDF-Bot)](https://github.com/Kameshwaran-45/PDF-Bot/stargazers)
+An **AI-powered chatbot** that enables users to query PDFs using **Ollama (Mistral)** and **ChromaDB**. Ideal for researchers, students, and professionals looking for quick insights from documents.
 
-An AI chatbot that answers questions from uploaded PDFs using **Ollama (Mistral)** and **ChromaDB**. Perfect for researchers, students, and professionals!
 
-👉 [Live Demo](#) | 📂 [GitHub Repo](https://github.com/Kameshwaran-45/PDF-Bot.git)
-
-![PDF-Bot Screenshot](./assets/screenshot.png) *(Add your screenshot later)*
+flowchart TD
+    A[Upload PDFs] --> B[Extract Text]
+    B --> C[Chunking\n1000 chars, overlap=200]
+    C --> D[Vectorize with\nall-mpnet-base-v2]
+    D --> E[Store in ChromaDB]
+    
+    F[User Query] --> G[Embed Query]
+    G --> H[Semantic Search]
+    H --> I[Retrieve Top\nRelevant Chunks]
+    I --> J[Generate Answer\nwith Mistral]
+    J --> K[Display Response to User]
+    
+    subgraph "Document Processing"
+        A
+        B
+        C
+        D
+        E
+    end
+    
+    subgraph "Query Processing"
+        F
+        G
+        H
+        I
+        J
+        K
+    end
+    
+    %% Connect the two processes
+    E -.-> H
+    
+    %% Style definitions
+    classDef upload fill:#d0f0c0,stroke:#333,stroke-width:2px
+    classDef process fill:#afeeee,stroke:#333,stroke-width:1px
+    classDef database fill:#f9d5e5,stroke:#333,stroke-width:1px
+    classDef output fill:#fffacd,stroke:#333,stroke-width:1px
+    classDef query fill:#d8bfd8,stroke:#333,stroke-width:1px
+    
+    %% Apply styles
+    class A upload
+    class B,C,D process
+    class E database
+    class F query
+    class G,H,I,J process
+    class K output
 
 ---
 
 ## 🌟 Features
-- **Natural Language QA** from PDFs
-- **Multi-PDF Support** (process multiple files)
-- **Semantic Search** with ChromaDB
-- **Conversational Memory** (remembers chat history)
-- **Dark/Light Mode** UI
+✅ **Extract Key Information** from PDFs
+✅ **Semantic Search** using ChromaDB
+✅ **Multi-PDF Processing**
+✅ **Conversational Memory** (Retains Chat Context)
+✅ **User-Friendly Interface** with Streamlit
+✅ **Fast and Efficient Query Resolution**
+
+---
 
 ## 🛠️ Tech Stack
-- **Backend**: Python, LangChain, Ollama (Mistral)
-- **Vector DB**: ChromaDB
-- **Embeddings**: Sentence Transformers (`all-mpnet-base-v2`)
-- **Frontend**: Streamlit
+- **Backend:** Python, LangChain, Ollama (Mistral)
+- **Vector Database:** ChromaDB
+- **Embeddings:** Sentence Transformers (`all-mpnet-base-v2`)
+- **Frontend:** Streamlit UI
 
 ---
 
 ## 📥 Installation
-1. **Clone the repo**:
-   ```bash
-   git clone https://github.com/Kameshwaran-45/PDF-Bot.git
-   cd PDF-Bot
-   ```
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/Kameshwaran-45/PDF-Bot.git
+cd PDF-Bot
+```
 
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 2️⃣ Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-3. **Run Ollama** (for Mistral LLM):
-   ```bash
-   ollama pull mistral
-   ```
+### 3️⃣ Run Ollama (for Mistral LLM)
+```bash
+ollama pull mistral
+```
 
-4. **Launch the app**:
-   ```bash
-   streamlit run app.py
-   ```
+### 4️⃣ Start the Application
+```bash
+streamlit run app.py
+```
 
 ---
 
@@ -61,58 +98,49 @@ An AI chatbot that answers questions from uploaded PDFs using **Ollama (Mistral)
 
 ```mermaid
 flowchart TD
-    A[User Uploads PDFs] --> B[Text Extraction]
-    B --> C[Chunking\n(1000 chars overlap=200)]
-    C --> D[Embedding\nall-mpnet-base-v2]
+    A[Upload PDFs] --> B[Extract Text]
+    B --> C[Chunking (1000 chars, overlap=200)]
+    C --> D[Vectorize with all-mpnet-base-v2]
     D --> E[Store in ChromaDB]
     F[User Query] --> G[Embed Query]
     G --> H[Semantic Search]
-    H --> I[Top 3 Relevant Chunks]
-    I --> J[Generate Answer\nwith Mistral]
+    H --> I[Retrieve Top Relevant Chunks]
+    I --> J[Generate Answer with Mistral]
     J --> K[Display Response]
 ```
 
-### Key Steps:
-1. **PDF Processing**: Extract text → Split into chunks → Vectorize
-2. **Query Handling**: Embed question → Find similar chunks → Generate answer
-3. **UI**: Streamlit interface for seamless interaction
+### **Workflow Overview:**
+1. **Upload PDFs**: The user uploads one or more PDFs.
+2. **Text Processing**: Extracts text and splits it into smaller chunks.
+3. **Vectorization**: Converts text into numerical embeddings for efficient retrieval.
+4. **Query Handling**:
+   - User asks a question.
+   - The question is embedded and compared with stored vectors.
+   - The most relevant chunks are retrieved.
+5. **Answer Generation**: The Mistral model generates a response using retrieved context.
 
 ---
 
 ## 🚀 Usage
-1. Upload PDFs via sidebar
-2. Click "Process Documents"
-3. Ask questions like:
+1. **Upload a PDF** via the Streamlit sidebar.
+2. Click on **Process Documents** to index the file.
+3. Ask **natural language questions** such as:
    - _"What are the key findings?"_
-   - _"Summarize page 5"_
-   - _"List all references cited"_
+   - _"Summarize page 5."_
+   - _"List all references cited."_
 
 ---
 
 ## 📜 License
 MIT © [Kameshwaran](https://github.com/Kameshwaran-45)
 
-```
-
 ---
 
-### 📌 **Flowchart Details** (ASCII version for quick reference):
-```
-┌─────────────┐   ┌──────────────┐   ┌───────────┐   ┌────────────┐
-│  PDF Upload │ → │ Text Extract │ → │ Chunking │ → │ Embeddings │
-└─────────────┘   └──────────────┘   └───────────┘   └────────────┘
-                                      ↓
-┌─────────────┐   ┌──────────────┐   ┌───────────────┐   ┌────────────┐
-│ User Query  │ → │ Query Embed  │ → │ Semantic Search│ → │ Generate   │
-└─────────────┘   └──────────────┘   └───────────────┘   │ Answer     │
-                                                         └────────────┘
-```
+## 📌 To-Do
+✅ Add **support for multiple file formats (DOCX, TXT, etc.)**
+✅ Improve **query relevance ranking**
+✅ Deploy using **Docker & Hugging Face Spaces**
+✅ Add **authentication for secure access**
 
----
+📢 **Contributions Welcome!** Feel free to fork, submit PRs, or raise issues!
 
-### 🖼️ **Assets to Add Later**:
-1. Add a `screenshot.png` in `/assets/`
-2. Update the demo link when deployed
-3. Customize badges (e.g., add PyTorch if needed)
-
-Let me know if you'd like to add **deployment instructions** (e.g., Docker, HuggingFace Spaces)! 🚀

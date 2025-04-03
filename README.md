@@ -47,21 +47,6 @@ streamlit run app.py
 
 ---
 
-## 🔍 How It Works
-
-```mermaid
-flowchart TD
-    A[Upload PDFs] --> B[Extract Text]
-    B --> C[Chunking (1000 chars, overlap=200)]
-    C --> D[Vectorize with all-mpnet-base-v2]
-    D --> E[Store in ChromaDB]
-    F[User Query] --> G[Embed Query]
-    G --> H[Semantic Search]
-    H --> I[Retrieve Top Relevant Chunks]
-    I --> J[Generate Answer with Mistral]
-    J --> K[Display Response]
-```
-
 ### **Workflow Overview:**
 1. **Upload PDFs**: The user uploads one or more PDFs.
 2. **Text Processing**: Extracts text and splits it into smaller chunks.

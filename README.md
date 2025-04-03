@@ -2,54 +2,7 @@
 
 An **AI-powered chatbot** that enables users to query PDFs using **Ollama (Mistral)** and **ChromaDB**. Ideal for researchers, students, and professionals looking for quick insights from documents.
 
-
-flowchart TD
-    A[Upload PDFs] --> B[Extract Text]
-    B --> C[Chunking\n1000 chars, overlap=200]
-    C --> D[Vectorize with\nall-mpnet-base-v2]
-    D --> E[Store in ChromaDB]
-    
-    F[User Query] --> G[Embed Query]
-    G --> H[Semantic Search]
-    H --> I[Retrieve Top\nRelevant Chunks]
-    I --> J[Generate Answer\nwith Mistral]
-    J --> K[Display Response to User]
-    
-    subgraph "Document Processing"
-        A
-        B
-        C
-        D
-        E
-    end
-    
-    subgraph "Query Processing"
-        F
-        G
-        H
-        I
-        J
-        K
-    end
-    
-    %% Connect the two processes
-    E -.-> H
-    
-    %% Style definitions
-    classDef upload fill:#d0f0c0,stroke:#333,stroke-width:2px
-    classDef process fill:#afeeee,stroke:#333,stroke-width:1px
-    classDef database fill:#f9d5e5,stroke:#333,stroke-width:1px
-    classDef output fill:#fffacd,stroke:#333,stroke-width:1px
-    classDef query fill:#d8bfd8,stroke:#333,stroke-width:1px
-    
-    %% Apply styles
-    class A upload
-    class B,C,D process
-    class E database
-    class F query
-    class G,H,I,J process
-    class K output
-
+![PDF-Bot Screenshot](./Img/flowchart.png) 
 ---
 
 ## 🌟 Features
